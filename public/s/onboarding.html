@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="theme-color" content="#7740d7">
+    <title>Sumaryzer Onboarding</title>
+    <link rel="stylesheet" href="../assets/css/custom-css.css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i|Nunito:300,400,700,900" rel="stylesheet"> 
+    <link rel="shortcut icon" href="../favicon.png">
+</head>
+
+<body class="bg-light pb-5">
+    <hr class="m-0 pb-1 bg-primary">
+    <section class="container px-lg-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img src="../assets/icons/logo-color.svg" alt="Sumaryz Logo" height="60" class="d-block mx-auto my-5">
+            </div>
+        </div>
+        <div class="card p-lg-5 text-center text-sm-left">
+            <div class="row mx-0 justify-content-around py-3">
+                <div class="col-12 col-sm-4 my-auto py-3">
+                    <h5 class="font-italic">Change Your Password</h5>
+                    <p>Welcome, login with your phone number and use <strong>sumaryzer</strong> as your password. After successful login, make sure you change your password before you continue<br>(NOTE: <strong>This is for users that have already signed up as sumaryzers)</strong>.</p>
+                </div>
+                <div class="col-12 card-body px-4 px-sm-3 col-sm-6">
+                    <img src="src/images/change-password-illustration.svg" alt="Change Password" class="img-fluid">
+                </div>
+            </div>
+            <div class="text-center py-5">
+                <svg width="30" height="60">
+                    <use xlink:href="#arrow-down"/>
+                </svg>
+            </div>
+            <div class="row mx-0 justify-content-around py-3">
+                <div class="col-12 col-sm-4 py-3 my-auto order-sm-2">
+                    <h5 class="font-italic">Add a Course</h5>
+                    <p>After you have successfully changed your password, Add all the courses you will love to summarize. Click on the course(s) you have added to add summaries for the course.</p>
+                </div>
+                <div class="col-12 card-body px-4 p-sm-2 col-sm-6 order-sm-1">
+                    <img src="src/images/add-course-illustration.svg" alt="Change Password" class="img-fluid">
+                </div>
+            </div>
+            <div class="text-center py-5">
+                <svg width="30" height="60">
+                    <use xlink:href="#arrow-down"/>
+                </svg>
+            </div>
+            <div class="row mx-0 justify-content-around py-3">
+                <div class="col-12 col-sm-4 my-auto py-3">
+                    <h5 class="font-italic">Publish Summaries</h5>
+                    <p>You can now write the summary of you daily lecture(s) and publish it</p>
+                </div>
+                <div class="col-12 card-body px-5 px-sm-2 col-sm-6">
+                    <img src="src/images/publish-illustration.svg" alt="Change Password" class="img-fluid">
+                </div>
+            </div>
+            <article class="card-body font-weight-bold text-center">
+                <a href="./" class="btn btn-primary btn-lg px-4">Proceed to login...</a>
+            </article>
+
+            
+        </div>
+    </section>
+
+    <script>
+        (function () {
+            localStorage.setItem("onboarding","true");
+            var els = document.querySelectorAll('.form-control');
+            function onInput(ev) {
+                ev.target.parentNode.classList.toggle('form-group__focused')
+            }
+            [].slice.call(els).forEach(function (inputEl) {
+                inputEl.addEventListener('focus', onInput);
+                inputEl.addEventListener('blur', onInput);
+            })
+        })();
+    </script>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1">
+        <symbol id="arrow-down" viewBox="0 0 44.8 58.9">
+            <defs><style>.a{fill:#160c28;}.b{fill:#7740d7;}.c{fill:#502895;}.d{fill:#fff;}</style></defs>
+            <title>arrow-down</title>
+            <path class="a" d="M21.6,58.8c5.3-1.1,25.2-21.7,23-25.8-2.3-7.9-9.9-5.8-11.5-8.8s1.8-19.7-1.5-22C24.4-1,11-1.6,7.5,6.1S9.4,26.7,5.6,28s-6,4.1-5.5,6.5S16.2,60.8,21.6,58.8Z"/><path class="b" d="M21.6,52c4-.6,17.8-14.2,15.9-17.5s-7.8-2.2-8.7-4.7,0-22.4-3-22.7S12.4,5.5,12.1,8.6s2.4,22.8-.5,23.6-6,.3-5.6,2.2S17.6,53.4,21.6,52Z"/><path class="c" d="M24.4,6.9s2.9-.3,3.3,3.2.3,20.3,1.5,20.7c3.6.2,9.6,2.8,9,5-.8,4.1-13.8,16.1-16.1,16.5s9.8-12.2,7.4-15.8-7.1-2.4-7.3-5.4S20,7.8,21.6,7.3,25.2,7.5,24.4,6.9Z"/><path class="d" d="M15.1,8.4s-1.1,21.9.3,22.9S19.8,13.6,15.1,8.4Z"/><path class="d" d="M18.8,48.6s-8.3-8.4-8.9-10.5,3.4-.9,3.4-.9S17.3,47.8,18.8,48.6Z"/>
+        </symbol>
+    </svg>
+</body>
+
+</html>

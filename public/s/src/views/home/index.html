@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="theme-color" content="#7740d7">
+	<title>Add New Course &bull; sumaryz</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="../../../../assets/css/index.css">
+	<link rel="stylesheet" href="../../styles/index.css">
+	<link rel="stylesheet" href="../../scripts/vendor/slim-select.css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i|Nunito:300,400,700,900" rel="stylesheet"> 
+    <link rel="shortcut icon" href="../../../../favicon.png">
+</head>
+
+<body class="bg-light">
+	<!-- 
+		(^_^)
+	-->
+	<nav class="navbar navbar-expand navbar-light sticky-top bg-white pl-0 pr-sm-5 text-nowrap">
+		<span class="navbar-brand bg-primary">
+			<img src="../../../../assets/icons/logo.svg" class="" height="40">
+		</span>
+		<div class="navbar-nav ml-auto ml-sm-0">
+			<a class="nav-item nav-link d-none d-sm-block">Add New Course</a>		
+		</div>
+		<div class="navbar-nav ml-0 ml-sm-auto">
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<svg class="navicon">
+						<use xlink:href="../../../../assets/icons/symbol-defs.svg#more" />
+					</svg>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownLink">
+					<a class="dropdown-item" href="../../../dashboard">Dashboard</a>
+				</div>
+			</div>
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle pr-0" id="dropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<svg class="navicon mr-2" style="">
+						<use xlink:href="../../../../assets/icons/symbol-defs.svg#face"/>
+					</svg>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownLink">
+					<a class="dropdown-item" href="../../../">Logout</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<main class="container px-lg-5 py-5">
+        <form id="courseForm" class="row justify-content-center px-sm-5 pb-5">
+            <div class="col-12 col-sm-4">
+                <label class="form-group">
+                    <span class="form-group__label">Course Code</span>
+                    <input type="text" name="c_code" class="form-control" maxlength="7" placeholder="e.g GENS103" required>
+                </label>
+            </div>
+            <div class="col-12 col-sm-6">
+                <label class="form-group">
+                    <span class="form-group__label">Course Title</span>
+                    <input type="text" name="c_title" class="form-control" required>
+                </label>
+            </div>
+            <div class="col-12 col-sm-5">
+                <div class="form-group pb-2">
+                    <label class="form-group__label">Faculty</label>
+                    <select class="custom-slim-select" name="faculty">
+						<option data-placeholder="true"></option>
+						<option value="Physical Sciences">Physical Sciences</option>
+						<option value="Engineering">Engineering</option>
+						<option value="Education">Education</option>
+						<option value="Environmental Design">Environmental Design</option>
+						<option value="Medicine">Medicine</option>
+						<option value="Life Sciences">Life Sciences</option>
+						<option value="Pharmaceutical Science">Pharmaceutical Science</option>
+						<option value="Social Science">Social Science</option>
+						<option value="Veterinary Medicine">Veterinary Medicine</option>
+						<option value="Arts">Arts</option>
+						<option value="Agriculture">Agriculture</option>
+						<option value="Administration">Administration</option>
+						<option value="Law">Law</option>
+					</select>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5">
+                <div class="form-group pb-2">
+                    <label class="form-group__label">Department</label>
+                    <input type="text" name="department" class="form-control" placeholder="e.g Mathematics" required>
+                    <!--select class="custom-slim-select" name="department">
+						<option data-placeholder="true"></option>
+						<option value="General">General</option>
+						<option value="Science">Science</option>
+					</select -->
+                </div>
+            </div>
+            <div class="col-12 col-sm-10">
+                <div class="form-group">
+                    <label class="form-group__label">Course Description</label>
+                    <textarea rows="3" class="form-control" name="description" placeholder="Maximum of 150 characters"></textarea>
+                </div>
+            </div>
+            <div class="col-12 col-sm-10 py-3 text-center">
+                <article class="alert alert-info status" style="display:none"></article>
+                <button type="button" id="addBtn" class="btn btn-danger btn-lg px-4">Add</button>
+            </div>
+        </form>
+    </main>
+    
+    <script src="../../../../assets/js/bootstrap.js"></script>
+    <script src="../../scripts/vendor/slim-select.js"></script>
+    <script>
+    	var selects = document.querySelectorAll('select');
+		[].slice.call(selects).forEach(function(selectEl) {
+			new SlimSelect({
+			    select: selectEl,
+			    showSearch: true,
+			    placeholder: 'Choose One...'
+			});
+		});
+    	(function () {
+            var els = document.querySelectorAll('.form-control');
+            function onInput(ev) {
+                ev.target.parentNode.classList.toggle('form-group__focused')
+            };
+            [].slice.call(els).forEach(function (inputEl) {
+                inputEl.addEventListener('focus', onInput);
+                inputEl.addEventListener('blur', onInput);
+            });
+        })();
+    </script>
+	<script src="../../../../js/ajaxModule.js"></script>
+	<script type="text/javascript">
+		//Student login
+		_('#addBtn').addEventListener('click', function() {
+			if (navigator.onLine) {
+				var hr = ajaxObj('POST', '../../../../requests/add_course.php');
+				var formdata = new FormData(_('#courseForm'));
+				hr.withCredentials = true;
+				hr.onreadystatechange = function() {
+					if (ajaxReturn(hr) == true) {
+						console.log(hr.responseText);
+						var d = JSON.parse(hr.responseText);
+						_("#addBtn").removeAttribute("disabled", "false");
+						_("#addBtn").innerHTML = 'Login';
+						_(".status").style.display = "block";
+						if (d.s) {
+							_('.status').innerHTML = d.s;
+							window.location = '../../../dashboard';
+						} else if(d.l){
+							window.location = '../../../';
+						} else if(d.created){
+							_('.status').innerHTML = d.created;
+							window.location = '../../../dashboard';
+						} else{
+							_('.status').innerHTML = d.f; 
+						}
+					}
+				}
+				hr.send(formdata);
+				_("#addBtn").setAttribute("disabled", "true");
+				_("#addBtn").innerHTML = 'Adding course..';
+			} else {
+				_(".status").style.display = "block";
+				_('.status').innerHTML = 'No internet connection available';
+				return false;
+			}
+		});
+	</script>
+</body>
+</html>
