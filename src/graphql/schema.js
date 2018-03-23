@@ -17,8 +17,8 @@ export default `
     type User {
         _id: ID!
         phone: String!
-        fname: String,
-        lname: String,
+        fname: String
+        lname: String
         user_posts: Int
         coin: Int!
         school: String

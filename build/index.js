@@ -40,7 +40,7 @@ var app = (0, _express2.default)();
 (0, _middlewares2.default)(app);
 app.use("/graphiql", (0, _apolloServerExpress.graphiqlExpress)({
   endpointURL: _constants2.default.GRAPHQL_PATH,
-  subscriptionsEndpoint: "ws://localhost:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
+  subscriptionsEndpoint: "ws://10.164.0.2:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
 }));
 
 var schema = (0, _graphqlTools.makeExecutableSchema)({
