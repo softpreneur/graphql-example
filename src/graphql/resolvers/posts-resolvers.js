@@ -27,8 +27,9 @@ export default {
       //Creating new post
       let new_post = await Post.create({ user: user._id, question: question, department: userInfo.department, faculty: userInfo.faculty });
       //New post subscription
-      console.log(new_post.department);
       pubsub.publish(NEW_POST, {[NEW_POST]: new_post});
+      console.log("********************");
+      console.log(JSON.stringify(new_post));
       return new_post;
     } catch (error) {
       throw error;
@@ -226,6 +227,7 @@ export default {
       console.log(b);
       console.log(payload.new_post.department);
       console.log(variables.department);
+      return b
     })
   },
   //Returns whole post with updated upvote number

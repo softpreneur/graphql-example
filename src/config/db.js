@@ -6,7 +6,7 @@ import constants from './constants';
 
 mongoose.Promise = global.Promise;
 
-mongoose.set('debug', true); // debug mode on
+//mongoose.set('debug', true); // debug mode on
 try {
     mongoose.connect(constants.DB_URL, {});
 } catch (err) {

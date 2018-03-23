@@ -19,7 +19,7 @@ app.use(
   "/graphiql",
   graphiqlExpress({
     endpointURL: constants.GRAPHQL_PATH,
-    subscriptionsEndpoint: `ws://127.0.0.1:${constants.PORT}${
+    subscriptionsEndpoint: `ws://localhost:${constants.PORT}${
       constants.SUBSCRIPTIONS_PATH
     }`
   })

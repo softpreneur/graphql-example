@@ -82,21 +82,22 @@ exports.default = {
               new_post = _context.sent;
 
               //New post subscription
-              console.log(new_post.department);
               _pubsub.pubsub.publish(NEW_POST, _defineProperty({}, NEW_POST, new_post));
+              console.log("********************");
+              console.log(JSON.stringify(new_post));
               return _context.abrupt('return', new_post);
 
-            case 12:
-              _context.prev = 12;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context['catch'](0);
               throw _context.t0;
 
-            case 15:
+            case 16:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[0, 12]]);
+      }, _callee, undefined, [[0, 13]]);
     }));
 
     function create_post(_x, _x2, _x3) {
@@ -656,6 +657,7 @@ exports.default = {
       console.log(b);
       console.log(payload.new_post.department);
       console.log(variables.department);
+      return b;
     })
   },
   //Returns whole post with updated upvote number

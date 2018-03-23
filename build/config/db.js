@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _mongoose2.default.Promise = global.Promise;
 
-_mongoose2.default.set('debug', true); // debug mode on
+//mongoose.set('debug', true); // debug mode on
 try {
     _mongoose2.default.connect(_constants2.default.DB_URL, {});
 } catch (err) {
