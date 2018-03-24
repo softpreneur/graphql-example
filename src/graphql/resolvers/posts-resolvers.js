@@ -28,8 +28,6 @@ export default {
       let new_post = await Post.create({ user: user._id, question: question, department: userInfo.department, faculty: userInfo.faculty });
       //New post subscription
       pubsub.publish(NEW_POST, {[NEW_POST]: new_post});
-      console.log("********************");
-      console.log(JSON.stringify(new_post));
       return new_post;
     } catch (error) {
       throw error;
@@ -223,11 +221,7 @@ export default {
   //Returns new post 
   new_post: {
     subscribe: withFilter(() => pubsub.asyncIterator(NEW_POST), (payload, variables ) => {
-      let b = Boolean(payload.new_post.department === variables.department);
-      console.log(b);
-      console.log(payload.new_post.department);
-      console.log(variables.department);
-      return b
+      return Boolean(payload.new_post.department === variables.department);
     })
   },
   //Returns whole post with updated upvote number
