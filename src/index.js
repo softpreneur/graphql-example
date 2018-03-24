@@ -12,14 +12,13 @@ import typeDefs from "./graphql/schema";
 import resolvers from "./graphql/resolvers";
 import constants from './config/constants';
 import middlewares from './config/middlewares';
-//import mocks from './mocks';
 const app = express();
 middlewares(app);
 app.use(
   "/graphiql",
   graphiqlExpress({
     endpointURL: constants.GRAPHQL_PATH,
-    subscriptionsEndpoint: `ws://10.164.0.2:${constants.PORT}${
+    subscriptionsEndpoint: `ws://127.0.0.1:${constants.PORT}${
       constants.SUBSCRIPTIONS_PATH
     }`
   })
