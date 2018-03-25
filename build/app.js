@@ -34,11 +34,12 @@ var _middlewares = require("./config/middlewares");
 var _middlewares2 = _interopRequireDefault(_middlewares);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var app = (0, _express2.default)();
 (0, _middlewares2.default)(app);
 app.use("/graphiql", (0, _apolloServerExpress.graphiqlExpress)({
   endpointURL: _constants2.default.GRAPHQL_PATH,
-  subscriptionsEndpoint: "ws://127.0.0.1:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
+  subscriptionsEndpoint: "ws://localhost:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
 }));
 
 var schema = (0, _graphqlTools.makeExecutableSchema)({
@@ -74,4 +75,4 @@ graphQLServer.listen(_constants2.default.PORT, function (err) {
   }
 });
 //});
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=app.js.map
