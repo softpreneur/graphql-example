@@ -1,6 +1,8 @@
 "use strict";
+
 require("babel-core/register");
 require("babel-polyfill");
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -39,7 +41,7 @@ var app = (0, _express2.default)();
 (0, _middlewares2.default)(app);
 app.use("/graphiql", (0, _apolloServerExpress.graphiqlExpress)({
   endpointURL: _constants2.default.GRAPHQL_PATH,
-  subscriptionsEndpoint: "ws://localhost:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
+  subscriptionsEndpoint: "wss://sumaryz-gtjpvsybpk.now.sh:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
 }));
 
 var schema = (0, _graphqlTools.makeExecutableSchema)({
