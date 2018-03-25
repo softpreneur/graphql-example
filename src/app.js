@@ -18,7 +18,7 @@ app.use(
   "/graphiql",
   graphiqlExpress({
     endpointURL: constants.GRAPHQL_PATH,
-    subscriptionsEndpoint: `ws://localhost:${constants.PORT}${
+    subscriptionsEndpoint: `wss://sumaryz-gtjpvsybpk.now.sh:${constants.PORT}${
       constants.SUBSCRIPTIONS_PATH
     }`
   })
