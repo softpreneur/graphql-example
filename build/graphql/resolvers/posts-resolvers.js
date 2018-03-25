@@ -83,21 +83,19 @@ exports.default = {
 
               //New post subscription
               _pubsub.pubsub.publish(NEW_POST, _defineProperty({}, NEW_POST, new_post));
-              console.log("********************");
-              console.log(JSON.stringify(new_post));
               return _context.abrupt('return', new_post);
 
-            case 13:
-              _context.prev = 13;
+            case 11:
+              _context.prev = 11;
               _context.t0 = _context['catch'](0);
               throw _context.t0;
 
-            case 16:
+            case 14:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[0, 13]]);
+      }, _callee, undefined, [[0, 11]]);
     }));
 
     function create_post(_x, _x2, _x3) {
@@ -653,11 +651,7 @@ exports.default = {
     subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
       return _pubsub.pubsub.asyncIterator(NEW_POST);
     }, function (payload, variables) {
-      var b = Boolean(payload.new_post.department === variables.department);
-      console.log(b);
-      console.log(payload.new_post.department);
-      console.log(variables.department);
-      return b;
+      return Boolean(payload.new_post.department === variables.department);
     })
   },
   //Returns whole post with updated upvote number

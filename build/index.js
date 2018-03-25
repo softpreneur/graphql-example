@@ -34,7 +34,6 @@ var _middlewares = require("./config/middlewares");
 var _middlewares2 = _interopRequireDefault(_middlewares);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var app = (0, _express2.default)();
 (0, _middlewares2.default)(app);
 app.use("/graphiql", (0, _apolloServerExpress.graphiqlExpress)({
