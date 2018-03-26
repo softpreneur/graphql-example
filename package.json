@@ -33,7 +33,6 @@
         "nodemon": "^1.14.7",
         "npm": "^5.8.0",
         "nvm": "^0.0.4",
-        "pm2": "^2.10.1",
         "subscriptions-transport-ws": "^0.9.5"
     },
     "engines": {
@@ -43,7 +42,7 @@
         "clean": "rm -rf build && mkdir build",
         "build-server": "babel -d ./build ./src -s",
         "build": "npm run clean && npm run build-server",
-        "start": "pm2 start ./build/app.js node --exec"
+        "start": "nodemon ./build/index.js node --exec"
     },
     "description": "A peer-to-peer learning platform",
     "author": "Motionwares Ltd",
