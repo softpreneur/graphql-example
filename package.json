@@ -39,7 +39,7 @@
         "clean": "rm -rf build && mkdir build",
         "build-server": "babel -d ./build ./src -s",
         "build": "npm run clean && npm run build-server",
-        "start": "nodemon app.js node --exec"
+        "start": "nodemon ./build/app.js node --exec"
     },
     "description": "This allow students read school materials",
     "author": "Motionwares Ltd",
