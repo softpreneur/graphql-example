@@ -33,13 +33,13 @@ export default {
     }
   },
   //Updating new user name or un-verify user after successfully verification of phone
-  update_name: async (_, { phone, fname, lname }) => {
+  update_name: async (_, { phone, fname, lname, email }) => {
     try {
       //Checking if user exist
       let user = await User.findOne({ phone: phone });
       //If user doesn't exist
       if(!user){
-          user = await User.create({ phone: phone, lname: lname, fname: fname });
+          user = await User.create({ phone: phone, lname: lname, fname: fname, email: email });
       } 
       //Creating token for user
       return {

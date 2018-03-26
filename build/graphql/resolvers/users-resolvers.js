@@ -82,7 +82,8 @@ exports.default = {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_, _ref3) {
       var phone = _ref3.phone,
           fname = _ref3.fname,
-          lname = _ref3.lname;
+          lname = _ref3.lname,
+          email = _ref3.email;
       var user;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -101,7 +102,7 @@ exports.default = {
               }
 
               _context2.next = 7;
-              return _User2.default.create({ phone: phone, lname: lname, fname: fname });
+              return _User2.default.create({ phone: phone, lname: lname, fname: fname, email: email });
 
             case 7:
               user = _context2.sent;
