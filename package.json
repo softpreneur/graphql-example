@@ -18,6 +18,8 @@
         "eslint": "^4.17.0",
         "express": "^4.16.2",
         "faker": "^4.1.0",
+        "forever": "^0.15.3",
+        "forever-monitor": "^1.7.1",
         "fuse.js": "^3.2.0",
         "graphql": "^0.12.3",
         "graphql-date": "^1.0.3",
@@ -40,7 +42,7 @@
         "clean": "rm -rf build && mkdir build",
         "build-server": "babel -d ./build ./src -s",
         "build": "npm run clean && npm run build-server",
-        "start": "./build/app.js"
+        "start": "forever ./build/app.js node --exec"
     },
     "description": "This allow students read school materials",
     "author": "Motionwares Ltd",
