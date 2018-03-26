@@ -43,9 +43,9 @@
         "clean": "rm -rf build && mkdir build",
         "build-server": "babel -d ./build ./src -s",
         "build": "npm run clean && npm run build-server",
-        "start": "pm2 start ./build/app.js"
+        "start": "pm2 start ./build/app.js node --exec"
     },
-    "description": "This allow students read school materials",
+    "description": "A peer-to-peer learning platform",
     "author": "Motionwares Ltd",
     "devDependencies": {
         "@google-cloud/nodejs-repo-tools": "^2.2.0",
