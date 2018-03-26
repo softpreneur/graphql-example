@@ -39,6 +39,7 @@ var _middlewares2 = _interopRequireDefault(_middlewares);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+
 var app = (0, _express2.default)();
 app.use((0, _compression2.default)());
 (0, _middlewares2.default)(app);
