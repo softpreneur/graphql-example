@@ -1,5 +1,6 @@
 "use strict";
-
+require("babel-core/register");
+require("babel-polyfill");
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -34,8 +35,6 @@ var _middlewares2 = _interopRequireDefault(_middlewares);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require("babel-core/register");
-require("babel-polyfill");
 
 var app = (0, _express2.default)();
 (0, _middlewares2.default)(app);
