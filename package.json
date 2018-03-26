@@ -42,7 +42,7 @@
         "clean": "rm -rf build && mkdir build",
         "build-server": "babel -d ./build ./src -s",
         "build": "npm run clean && npm run build-server",
-        "start": "nodemon ./build/index.js node --exec"
+        "start": "nodemon ./build/app.js node --exec"
     },
     "description": "A peer-to-peer learning platform",
     "author": "Motionwares Ltd",
