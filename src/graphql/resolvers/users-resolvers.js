@@ -50,11 +50,11 @@ export default {
     }
   },
   //Updating full account details on successful login
-  update_account: async (_, { school, faculty, department, level, course_study, dob, email }, { user }) => {
+  update_account: async (_, { school, faculty, department, level, dob }, { user }) => {
     try {
       //authenticating user
       await requireAuth(user);
-      const userUpdate = await User.update( { _id: user._id }, { $set: { school: school, faculty: faculty, department: department, course_study: course_study, dob: dob, level: level, email: email } } );
+      const userUpdate = await User.update( { _id: user._id }, { $set: { school: school, faculty: faculty, department: department, dob: dob, level: level } } );
       if (userUpdate) {
         return {
           message: "success",

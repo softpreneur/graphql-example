@@ -127,8 +127,8 @@ export default `
         get_courses(char: String): [C]
     }
     type Mutation {
-        update_name(phone: String!, fname: String, lname: String): Auth
-        update_account(school: String!, faculty: String!, department: String!, level: Int, course_study: String, dob: String, email: String!): Status
+        update_name(phone: String!, fname: String, lname: String, email: String): Auth
+        update_account(school: String!, faculty: String!, department: String!, level: Int, dob: String): Status
         create_post(question: String!): Post
         create_post_comment(post: ID!, comment: String!): PostComment 
         become_sumaryzer(course_title: String!, course_code:String!, department:String!, faculty:String!, description: String!):Status
