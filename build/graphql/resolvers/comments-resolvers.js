@@ -227,10 +227,7 @@ exports.default = {
 
             case 3:
               _context4.next = 5;
-              return _CommentDownvote2.default.findOne({
-                user: user._id,
-                comment: comment
-              });
+              return _CommentDownvote2.default.findOne({ user: user._id, comment: comment });
 
             case 5:
               check = _context4.sent;

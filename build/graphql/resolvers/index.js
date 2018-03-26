@@ -84,7 +84,6 @@ exports.default = {
       return _PostComment2.default.find({ post: _._id }).limit(5);
     }
   },
-  User: {},
   PostComment: {
     //resolving user field in PostComment with result from selection of post comments
     user: function user(_, args, _ref3) {

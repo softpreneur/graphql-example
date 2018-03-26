@@ -66,26 +66,17 @@ export default {
     try {
       await requireAuth(user);
       //Checking if comment has been upvoted
-      let check = await PostCommentDownvote.findOne({
-        user: user._id,
-        comment: comment
-      });
+      let check = await PostCommentDownvote.findOne({ user: user._id, comment: comment });
       let v;
       if (!check) {
         //Creating new comment upvote document
         await PostCommentDownvote.create({ user: user._id, comment: comment });
-        await PostComment.update(
-          { _id: comment },
-          { $inc: { downvote_no: +1 } }
-        );
+        await PostComment.update( { _id: comment }, { $inc: { downvote_no: +1 } });
         v = true;
       } else {
         //If it exist, remove it
         await PostCommentDownvote.remove({ user: user._id, comment: comment });
-        await PostComment.update(
-          { _id: comment },
-          { $inc: { downvote_no: -1 } }
-        );
+        await PostComment.update( { _id: comment }, { $inc: { downvote_no: -1 } });
         v = false;
       }
       return { message: "success", value: v };

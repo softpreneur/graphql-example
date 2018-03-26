@@ -23,8 +23,6 @@ export default {
     user: (_, args, { user }) => User.findById(_.user, { fname: 1, lname: 1, department: 1 }),
     comments: (_, args, { user }) => PostComment.find({ post: _._id }).limit(5)
   },
-  User: {
-  },
   PostComment: {
     //resolving user field in PostComment with result from selection of post comments
     user: (_, args, { user }) => User.findById(_.user, {fname: 1, lname: 1, department: 1 }),
