@@ -3423,11 +3423,5 @@ export default [
   },
   {
     name: "Computer and Information Sciences"
-  },
-  {
-    name: ""
-  },
-  {
-    name: ""
   }
 ];

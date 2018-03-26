@@ -76,11 +76,5 @@ export default [
   },
   {
     name: "Health Sciences"
-  },
-  {
-    name: ""
-  },
-  {
-    name: ""
   }
 ];
