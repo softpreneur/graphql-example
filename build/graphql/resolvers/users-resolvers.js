@@ -137,9 +137,7 @@ exports.default = {
           faculty = _ref5.faculty,
           department = _ref5.department,
           level = _ref5.level,
-          course_study = _ref5.course_study,
-          dob = _ref5.dob,
-          email = _ref5.email;
+          dob = _ref5.dob;
       var user = _ref6.user;
       var userUpdate;
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -152,7 +150,7 @@ exports.default = {
 
             case 3:
               _context3.next = 5;
-              return _User2.default.update({ _id: user._id }, { $set: { school: school, faculty: faculty, department: department, course_study: course_study, dob: dob, level: level, email: email } });
+              return _User2.default.update({ _id: user._id }, { $set: { school: school, faculty: faculty, department: department, dob: dob, level: level } });
 
             case 5:
               userUpdate = _context3.sent;

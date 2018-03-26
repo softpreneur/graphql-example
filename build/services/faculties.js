@@ -55,9 +55,5 @@ exports.default = [{
   name: "Forestry"
 }, {
   name: "Health Sciences"
-}, {
-  name: ""
-}, {
-  name: ""
 }];
 //# sourceMappingURL=faculties.js.map

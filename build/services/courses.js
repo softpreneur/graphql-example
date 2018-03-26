@@ -2285,9 +2285,5 @@ exports.default = [{
   name: "Forest Resource Management"
 }, {
   name: "Computer and Information Sciences"
-}, {
-  name: ""
-}, {
-  name: ""
 }];
 //# sourceMappingURL=courses.js.map
