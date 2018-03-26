@@ -43,7 +43,7 @@
         "clean": "rm -rf build && mkdir build",
         "build-server": "babel -d ./build ./src -s",
         "build": "npm run clean && npm run build-server",
-        "start": "slc ./build/app.js node --exec"
+        "start": "forever start --minUptime 1234 --spinSleepTime 3421 ./build/app.js node --exec"
     },
     "description": "This allow students read school materials",
     "author": "Motionwares Ltd",
