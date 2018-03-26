@@ -1,6 +1,6 @@
 require("babel-core/register");
 require("babel-polyfill");
-import { compression } from "compression";
+import compression from "compression";
 import express from 'express';
 import { createServer } from 'http';
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
