@@ -1,5 +1,6 @@
 "use strict";
-
+require("babel-core/register");
+require("babel-polyfill");
 var _compression = require("compression");
 
 var _compression2 = _interopRequireDefault(_compression);
@@ -38,9 +39,6 @@ var _middlewares2 = _interopRequireDefault(_middlewares);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require("babel-core/register");
-require("babel-polyfill");
-
 var app = (0, _express2.default)();
 app.use((0, _compression2.default)());
 (0, _middlewares2.default)(app);
@@ -50,7 +48,7 @@ app.use("/graphiql", (0, _apolloServerExpress.graphiqlExpress)({
   subscriptionsEndpoint: "ws://35.204.1.76:" + _constants2.default.PORT + _constants2.default.SUBSCRIPTIONS_PATH
 }));
 //Rendering the static files
-app.use(_express2.default.static(path.join(__dirname, "../public")));
+//app.use(express.static(path.join("public", "public")));
 
 var schema = (0, _graphqlTools.makeExecutableSchema)({
   typeDefs: _schema2.default,
