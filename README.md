@@ -1,1 +1,0 @@
-Graphql sample endpoints
