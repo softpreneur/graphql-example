@@ -11,41 +11,21 @@ const UserSchema = new Schema({
         unique: true
     },
     password: String,
-    coin: {
-        type: Number,
-        default: 0
-    },
-    status: {
-        type: Boolean,
-        default: false
-    },
-    no_posts: {
-        type: Number,
-        default: 0
-    },
-    school: String,
-    level: Number,
-    faculty: {
+    sector: {
         type: String
     },
-    department: {
-        type: String
-    },
-    course_study: String,
     email: String,
-    avatar: String,
-    dob: Date
 }, { collection: 'users' });
 //Adding timestamps to each user created
 UserSchema.plugin(timestamps);
 //Creating user model methods 
-/*UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function(next) {
     if (this.isModified('password')) {
         this.password = this._hashPassword(this.password);
         return next();
     }
     return next();
-});*/
+});
 
 UserSchema.methods = {
     createToken() {
@@ -55,13 +35,13 @@ UserSchema.methods = {
             constants.JWT_SECRET
         )
     },
-    /*_hashPassword(password) {
+    _hashPassword(password) {
         return hashSync(password);
     },
     //Only applicable if we choose to use password
     verifyPass(password) {
         return compareSync(password, this.password);
-    },*/
+    },
     
 }
 export default mongoose.model('User', UserSchema);

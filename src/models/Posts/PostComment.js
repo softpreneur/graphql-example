@@ -13,14 +13,6 @@ const PostCommentSchema = new Schema(
       index: true
     },
     comment: String,
-    upvote_no: {
-      type: Number,
-      default: 0
-    },
-    downvote_no: {
-      type: Number,
-      default: 0
-    }
   },
   { collection: "post_comments" }
 );

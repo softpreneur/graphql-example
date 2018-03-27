@@ -21,13 +21,11 @@ app.use(
   "/graphiql",
   graphiqlExpress({
     endpointURL: constants.GRAPHQL_PATH,
-    subscriptionsEndpoint: `ws://35.204.1.76:${constants.PORT}${
+    subscriptionsEndpoint: `ws://localhost:${constants.PORT}${
       constants.SUBSCRIPTIONS_PATH
     }`
   })
 );
-//Rendering the static files
-//app.use(express.static(path.join("public", "public")));
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -45,7 +43,6 @@ app.use(
 );
 
 const graphQLServer = createServer(app);
-//mocks().then(() => {
 graphQLServer.listen(constants.PORT, err => {
     if (err) {
         console.log(err)
@@ -62,4 +59,3 @@ graphQLServer.listen(constants.PORT, err => {
         console.log(`Server running on ${constants.PORT}`)
     }
 });
-//});
