@@ -50,6 +50,7 @@ exports.default = {
       return _User2.default.findById(_.user, { fname: 1, lname: 1, sector: 1 });
     }
   },
+  //All queries resolvers
   Query: {
     me: _usersResolvers2.default.me,
     login: _usersResolvers2.default.login,
@@ -57,11 +58,13 @@ exports.default = {
     my_posts: _postsResolvers2.default.my_posts,
     post_comments: _postsResolvers2.default.post_comments
   },
+  //All mutation resolvers
   Mutation: {
     create_account: _usersResolvers2.default.create_account,
     create_post: _postsResolvers2.default.create_post,
     create_post_comment: _postsResolvers2.default.create_post_comment
   },
+  //All subscription resolvers
   Subscription: {
     new_post: _postsResolvers2.default.new_post,
     post_comment_added: _postsResolvers2.default.post_comment_added

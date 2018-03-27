@@ -18,7 +18,7 @@ export default {
       throw error;
     }
   },
-  //Updating new user name or un-verify user after successfully verification of phone
+  //Login user with only phone number
   login: async (_, { phone }) => {
     try {
       //Checking if user exist
@@ -27,7 +27,7 @@ export default {
       if(!user){
           throw new Error("Create account")
       } 
-      //Creating token for user
+      //Creating token for user if they exist
       return {
           token: user.createToken()
       }
@@ -35,7 +35,7 @@ export default {
       throw error;
     }
   },
-  //Returning current logged user
+  //Returning current logged user information
   me: async (_, args, { user }) => {
     try {
       return await requireAuth(user);

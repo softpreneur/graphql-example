@@ -38,7 +38,7 @@ export default `
     }
     type Mutation {
         create_account(phone: String!, fname: String!, lname: String!, email: String, sector: String!, password: String!): Auth
-        create_post(question: String!): Post
+        create_post(content: String!, sector: String!): Post
         create_post_comment(post: ID!, comment: String!): PostComment 
     }
     type Subscription {

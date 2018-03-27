@@ -18,6 +18,7 @@ export default {
     user: (_, args, { user }) =>
       User.findById(_.user, { fname: 1, lname: 1, sector: 1 })
   },
+  //All queries resolvers
   Query: {
     me: UserResolvers.me,
     login: UserResolvers.login,
@@ -25,11 +26,13 @@ export default {
     my_posts: PostResolvers.my_posts,
     post_comments: PostResolvers.post_comments
   },
+  //All mutation resolvers
   Mutation: {
     create_account: UserResolvers.create_account,
     create_post: PostResolvers.create_post,
     create_post_comment: PostResolvers.create_post_comment
   },
+  //All subscription resolvers
   Subscription: {
     new_post: PostResolvers.new_post,
     post_comment_added: PostResolvers.post_comment_added

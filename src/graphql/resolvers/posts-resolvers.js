@@ -26,8 +26,9 @@ export default {
   //Getting posts in users department or faculty
   posts: async (_, { cursor, limit }, { user }) => {
     try {
-      //Authentication
+      //Authenticating user
       let userInfo = await requireAuth(user);
+      //Checking if cursor is set
       if(cursor != undefined ){
         return await Post.find({ sector: sector }).limit(limit).sort({ createdAt: - 1 });
       }
@@ -37,10 +38,12 @@ export default {
       throw error;
     }
   },
+  //Getting psot created by logged user
   my_posts: async (_, { cursor, limit }, { user }) => {
     try {
-      //Authentication
+      //Authenticating user
       let userInfo = await requireAuth(user);
+      //Checking if cursor is set
       if(cursor != undefined ){
         return await Post.find({ user: user._id }, {createdAt: { $lt: cursor }}).limit(limit).sort({ createdAt: - 1 });
       }

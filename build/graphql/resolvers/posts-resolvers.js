@@ -135,6 +135,7 @@ exports.default = {
 
     return posts;
   }(),
+  //Getting psot created by logged user
   my_posts: function () {
     var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(_, _ref7, _ref8) {
       var cursor = _ref7.cursor,

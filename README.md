@@ -3,6 +3,8 @@ This example covers, graphql queries, mutations and subscriptions. If you find i
 1. Emmanuel Quimper (https://www.youtube.com/channel/UC7R7bcH9-KEBDiGNP1mZnmw)
 2. Ben Awad (https://www.youtube.com/user/99baddawg)
 
+This example allow users to create account, login, create new posts only when they are logged in and get instant notification based on sector they are interested in when they create account.
+
 You can also read my experience with graphql on medium ()
 
 If you customize this to work for you, kindly follow these step to get it working

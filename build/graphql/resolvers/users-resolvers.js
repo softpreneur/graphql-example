@@ -71,7 +71,7 @@ exports.default = {
 
     return create_account;
   }(),
-  //Updating new user name or un-verify user after successfully verification of phone
+  //Login user with only phone number
   login: function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_, _ref3) {
       var phone = _ref3.phone;
@@ -118,7 +118,7 @@ exports.default = {
 
     return login;
   }(),
-  //Returning current logged user
+  //Returning current logged user information
   me: function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(_, args, _ref5) {
       var user = _ref5.user;
