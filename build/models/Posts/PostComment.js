@@ -24,15 +24,7 @@ var PostCommentSchema = new _mongoose.Schema({
     ref: "Post",
     index: true
   },
-  comment: String,
-  upvote_no: {
-    type: Number,
-    default: 0
-  },
-  downvote_no: {
-    type: Number,
-    default: 0
-  }
+  comment: String
 }, { collection: "post_comments" });
 PostCommentSchema.plugin(_mongooseTimestamp2.default);
 PostCommentSchema.index({ createdAt: 1 });

@@ -1,7 +1,5 @@
 import User from '../../models/User';
-import Feedback from '../../models/Feedback'
 import { requireAuth } from '../../services/auth';
-import { NewCoin } from "../../models/NewCoin";
 export default {
   //Updating new user name or un-verify user after successfully verification of phone
   create_account: async (_, { phone, fname, lname, email, password }) => {

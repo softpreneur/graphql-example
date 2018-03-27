@@ -1,6 +1,5 @@
 require("babel-core/register");
 require("babel-polyfill");
-import compression from "compression";
 import express from 'express';
 import { createServer } from 'http';
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
@@ -14,7 +13,6 @@ import resolvers from "./graphql/resolvers";
 import constants from './config/constants';
 import middlewares from './config/middlewares';
 const app = express();
-app.use(compression());
 middlewares(app);
 
 app.use(

@@ -32,47 +32,35 @@ var UserSchema = new _mongoose.Schema({
         unique: true
     },
     password: String,
-    coin: {
-        type: Number,
-        default: 0
-    },
-    status: {
-        type: Boolean,
-        default: false
-    },
-    no_posts: {
-        type: Number,
-        default: 0
-    },
-    school: String,
-    level: Number,
-    faculty: {
+    sector: {
         type: String
     },
-    department: {
-        type: String
-    },
-    course_study: String,
-    email: String,
-    avatar: String,
-    dob: Date
+    email: String
 }, { collection: 'users' });
 //Adding timestamps to each user created
 UserSchema.plugin(_mongooseTimestamp2.default);
 //Creating user model methods 
-/*UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
     if (this.isModified('password')) {
         this.password = this._hashPassword(this.password);
         return next();
     }
     return next();
-});*/
+});
 
 UserSchema.methods = {
     createToken: function createToken() {
         return _jsonwebtoken2.default.sign({
             _id: this._id
         }, _constants2.default.JWT_SECRET);
+    },
+    _hashPassword: function _hashPassword(password) {
+        return (0, _bcryptNodejs.hashSync)(password);
+    },
+
+    //Only applicable if we choose to use password
+    verifyPass: function verifyPass(password) {
+        return (0, _bcryptNodejs.compareSync)(password, this.password);
     }
 };
 exports.default = _mongoose2.default.model('User', UserSchema);

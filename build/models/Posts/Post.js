@@ -20,30 +20,10 @@ var PostSchema = new _mongoose.Schema({
     ref: "User",
     index: true
   },
-  question: String,
-  course: {
-    type: _mongoose.Schema.Types.ObjectId,
-    ref: "Course"
-  },
-  department: {
+  content: String,
+  sector: {
     type: String,
     index: true
-  },
-  faculty: {
-    type: String,
-    index: true
-  },
-  upvote_no: {
-    type: Number,
-    default: 0
-  },
-  downvote_no: {
-    type: Number,
-    default: 0
-  },
-  no_answers: {
-    type: Number,
-    default: 0
   }
 }, { collection: "posts" });
 PostSchema.plugin(_mongooseTimestamp2.default);

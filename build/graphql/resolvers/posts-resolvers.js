@@ -14,26 +14,6 @@ var _PostComment = require('../../models/Posts/PostComment');
 
 var _PostComment2 = _interopRequireDefault(_PostComment);
 
-var _Upvote = require('../../models/Posts/Upvote');
-
-var _Upvote2 = _interopRequireDefault(_Upvote);
-
-var _Downvote = require('../../models/Posts/Downvote');
-
-var _Downvote2 = _interopRequireDefault(_Downvote);
-
-var _Course = require('../../models/Courses/Course');
-
-var _Course2 = _interopRequireDefault(_Course);
-
-var _CommentUpvote = require('../../models/Posts/CommentUpvote');
-
-var _CommentUpvote2 = _interopRequireDefault(_CommentUpvote);
-
-var _CommentDownvote = require('../../models/Posts/CommentDownvote');
-
-var _CommentDownvote2 = _interopRequireDefault(_CommentDownvote);
-
 var _auth = require('../../services/auth');
 
 var _pubsub = require('../../config/pubsub');
@@ -51,18 +31,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var NEW_POST = "new_post";
-var POST_UPVOTE_UPDATED = "post_upvote_updated";
-var POST_DOWNVOTE_UPDATED = "post_downvote_updated";
 var POST_COMMENT_ADDED = "post_comment_added";
-var POST_COMMENT_INCREASED = "post_comment_increased";
-var POST_COMMENT_UPVOTED = "post_comment_upvoted";
-var POST_COMMENT_DOWNVOTED = "post_comment_downvoted";
 
 exports.default = {
   //Creating post by logge user
   create_post: function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_, _ref, _ref2) {
-      var question = _ref.question;
+      var content = _ref.content,
+          sector = _ref.sector;
       var user = _ref2.user;
       var userInfo, new_post;
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -76,7 +52,7 @@ exports.default = {
             case 3:
               userInfo = _context.sent;
               _context.next = 6;
-              return _Post2.default.create({ user: user._id, question: question, department: userInfo.department, faculty: userInfo.faculty });
+              return _Post2.default.create({ user: user._id, content: content, sector: sector });
 
             case 6:
               new_post = _context.sent;
@@ -128,14 +104,14 @@ exports.default = {
               }
 
               _context2.next = 7;
-              return _Post2.default.find({ $or: [{ department: userInfo.department }, { faculty: userInfo.faculty }], createdAt: { $lt: cursor } }).limit(limit).sort({ createdAt: -1 });
+              return _Post2.default.find({ sector: sector }).limit(limit).sort({ createdAt: -1 });
 
             case 7:
               return _context2.abrupt('return', _context2.sent);
 
             case 8:
               _context2.next = 10;
-              return _Post2.default.find({ $or: [{ department: userInfo.department }, { faculty: userInfo.faculty }] }).limit(limit).sort({ createdAt: -1 });
+              return _Post2.default.find({ sector: sector }).limit(limit).sort({ createdAt: -1 });
 
             case 10:
               return _context2.abrupt('return', _context2.sent);
@@ -213,12 +189,11 @@ exports.default = {
 
     return my_posts;
   }(),
-  //Upvoting post by logged user
-  upvote_post: function () {
-    var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(_, _ref10, _ref11) {
-      var post = _ref10.post;
-      var user = _ref11.user;
-      var status, v, updated_post_u, upvote_value;
+  //Currently logged in user answering questions
+  create_post_comment: function () {
+    var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(_, args, _ref10) {
+      var user = _ref10.user;
+      var comment, updated_post;
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
@@ -229,76 +204,61 @@ exports.default = {
 
             case 3:
               _context4.next = 5;
-              return _Upvote2.default.findOne({ user: user._id, post: post });
+              return _PostComment2.default.create(_extends({ user: user._id }, args));
 
             case 5:
-              status = _context4.sent;
-              v = void 0, updated_post_u = void 0, upvote_value = void 0;
+              comment = _context4.sent;
 
-              if (status) {
-                _context4.next = 14;
+              if (!comment) {
+                _context4.next = 15;
                 break;
               }
 
-              _context4.next = 10;
-              return _Upvote2.default.create({ user: user._id, post: post });
+              _context4.next = 9;
+              return _Post2.default.findByIdAndUpdate(comment.post, { $inc: { no_answers: +1 } }, { new: true });
 
-            case 10:
-              upvote_value = +1;
-              v = true;
-              _context4.next = 18;
-              break;
+            case 9:
+              updated_post = _context4.sent;
 
-            case 14:
-              _context4.next = 16;
-              return _Upvote2.default.remove({ user: user._id, post: post });
+              //Subscription for increase in number post comments
+              _pubsub.pubsub.publish(POST_COMMENT_INCREASED, _defineProperty({}, POST_COMMENT_INCREASED, updated_post));
+              //Subscription for new post comment
+              _pubsub.pubsub.publish(POST_COMMENT_ADDED, _defineProperty({}, POST_COMMENT_ADDED, comment));
+              return _context4.abrupt('return', comment);
+
+            case 15:
+              throw new Error("An error occured");
 
             case 16:
-              upvote_value = -1;
-              v = false;
+              _context4.next = 21;
+              break;
 
             case 18:
-              _context4.next = 20;
-              return _Post2.default.findByIdAndUpdate(post, { $inc: { upvote_no: upvote_value } }, { new: true });
-
-            case 20:
-              updated_post_u = _context4.sent;
-
-              //Subscription for increase in number of upvote
-              _pubsub.pubsub.publish(POST_UPVOTE_UPDATED, _defineProperty({}, POST_UPVOTE_UPDATED, updated_post_u));
-              return _context4.abrupt('return', {
-                message: "success",
-                value: v
-              });
-
-            case 25:
-              _context4.prev = 25;
+              _context4.prev = 18;
               _context4.t0 = _context4['catch'](0);
-              return _context4.abrupt('return', {
-                message: _context4.t0,
-                value: true
-              });
+              throw _context4.t0;
 
-            case 28:
+            case 21:
             case 'end':
               return _context4.stop();
           }
         }
-      }, _callee4, undefined, [[0, 25]]);
+      }, _callee4, undefined, [[0, 18]]);
     }));
 
-    function upvote_post(_x10, _x11, _x12) {
-      return _ref12.apply(this, arguments);
+    function create_post_comment(_x10, _x11, _x12) {
+      return _ref11.apply(this, arguments);
     }
 
-    return upvote_post;
+    return create_post_comment;
   }(),
-  //Downvoting post by log in user
-  downvote_post: function () {
-    var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(_, _ref13, _ref14) {
-      var post = _ref13.post;
-      var user = _ref14.user;
-      var status, v, updated_post_d, downvote_value;
+  //Getting the last 7 answers
+  post_comments: function () {
+    var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(_, _ref12, _ref13) {
+      var post = _ref12.post,
+          cursor = _ref12.cursor,
+          limit = _ref12.limit;
+      var user = _ref13.user;
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
@@ -308,338 +268,42 @@ exports.default = {
               return (0, _auth.requireAuth)(user);
 
             case 3:
-              _context5.next = 5;
-              return _Downvote2.default.findOne({ user: user._id, post: post });
-
-            case 5:
-              status = _context5.sent;
-              v = void 0, updated_post_d = void 0, downvote_value = void 0;
-
-              if (status) {
-                _context5.next = 14;
+              if (!cursor) {
+                _context5.next = 7;
                 break;
               }
 
-              _context5.next = 10;
-              return _Downvote2.default.create({ user: user._id, post: post });
+              _context5.next = 6;
+              return _PostComment2.default.find({ post: post, createdAt: { $lt: cursor } }).limit(limit).sort({ createdAt: -1 });
 
-            case 10:
-              downvote_value = +1;
-              v = true;
-              _context5.next = 18;
-              break;
+            case 6:
+              return _context5.abrupt('return', _context5.sent);
 
-            case 14:
-              _context5.next = 16;
-              return _Downvote2.default.remove({ user: user._id, post: post });
+            case 7:
+              _context5.next = 9;
+              return _PostComment2.default.find({ post: post }).limit(limit).sort({ createdAt: -1 });
 
-            case 16:
-              downvote_value = -1;
-              v = false;
+            case 9:
+              return _context5.abrupt('return', _context5.sent);
 
-            case 18:
-              _context5.next = 20;
-              return _Post2.default.findByIdAndUpdate(post, { $inc: { downvote_no: downvote_value } }, { new: true });
-
-            case 20:
-              updated_post_d = _context5.sent;
-
-              //Subscription for increase in the number of downvote
-              _pubsub.pubsub.publish(POST_DOWNVOTE_UPDATED, _defineProperty({}, POST_DOWNVOTE_UPDATED, updated_post_d));
-              return _context5.abrupt('return', {
-                message: "success",
-                value: v
-              });
-
-            case 25:
-              _context5.prev = 25;
+            case 12:
+              _context5.prev = 12;
               _context5.t0 = _context5['catch'](0);
-              return _context5.abrupt('return', {
-                message: "error",
-                value: true
-              });
+              throw _context5.t0;
 
-            case 28:
+            case 15:
             case 'end':
               return _context5.stop();
           }
         }
-      }, _callee5, undefined, [[0, 25]]);
+      }, _callee5, undefined, [[0, 12]]);
     }));
 
-    function downvote_post(_x13, _x14, _x15) {
-      return _ref15.apply(this, arguments);
-    }
-
-    return downvote_post;
-  }(),
-  //Currently logged in user answering questions
-  create_post_comment: function () {
-    var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(_, args, _ref16) {
-      var user = _ref16.user;
-      var comment, updated_post;
-      return regeneratorRuntime.wrap(function _callee6$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              _context6.prev = 0;
-              _context6.next = 3;
-              return (0, _auth.requireAuth)(user);
-
-            case 3:
-              _context6.next = 5;
-              return _PostComment2.default.create(_extends({ user: user._id }, args));
-
-            case 5:
-              comment = _context6.sent;
-
-              if (!comment) {
-                _context6.next = 15;
-                break;
-              }
-
-              _context6.next = 9;
-              return _Post2.default.findByIdAndUpdate(comment.post, { $inc: { no_answers: +1 } }, { new: true });
-
-            case 9:
-              updated_post = _context6.sent;
-
-              //Subscription for increase in number post comments
-              _pubsub.pubsub.publish(POST_COMMENT_INCREASED, _defineProperty({}, POST_COMMENT_INCREASED, updated_post));
-              //Subscription for new post comment
-              _pubsub.pubsub.publish(POST_COMMENT_ADDED, _defineProperty({}, POST_COMMENT_ADDED, comment));
-              return _context6.abrupt('return', comment);
-
-            case 15:
-              throw new Error("An error occured");
-
-            case 16:
-              _context6.next = 21;
-              break;
-
-            case 18:
-              _context6.prev = 18;
-              _context6.t0 = _context6['catch'](0);
-              throw _context6.t0;
-
-            case 21:
-            case 'end':
-              return _context6.stop();
-          }
-        }
-      }, _callee6, undefined, [[0, 18]]);
-    }));
-
-    function create_post_comment(_x16, _x17, _x18) {
-      return _ref17.apply(this, arguments);
-    }
-
-    return create_post_comment;
-  }(),
-  //Getting the last 7 answers
-  post_comments: function () {
-    var _ref20 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(_, _ref18, _ref19) {
-      var post = _ref18.post,
-          cursor = _ref18.cursor,
-          limit = _ref18.limit;
-      var user = _ref19.user;
-      return regeneratorRuntime.wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              _context7.prev = 0;
-              _context7.next = 3;
-              return (0, _auth.requireAuth)(user);
-
-            case 3:
-              if (!cursor) {
-                _context7.next = 7;
-                break;
-              }
-
-              _context7.next = 6;
-              return _PostComment2.default.find({ post: post, createdAt: { $lt: cursor } }).limit(limit).sort({ createdAt: -1 });
-
-            case 6:
-              return _context7.abrupt('return', _context7.sent);
-
-            case 7:
-              _context7.next = 9;
-              return _PostComment2.default.find({ post: post }).limit(limit).sort({ createdAt: -1 });
-
-            case 9:
-              return _context7.abrupt('return', _context7.sent);
-
-            case 12:
-              _context7.prev = 12;
-              _context7.t0 = _context7['catch'](0);
-              throw _context7.t0;
-
-            case 15:
-            case 'end':
-              return _context7.stop();
-          }
-        }
-      }, _callee7, undefined, [[0, 12]]);
-    }));
-
-    function post_comments(_x19, _x20, _x21) {
-      return _ref20.apply(this, arguments);
+    function post_comments(_x13, _x14, _x15) {
+      return _ref14.apply(this, arguments);
     }
 
     return post_comments;
-  }(),
-  upvote_post_comment: function () {
-    var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(_, _ref21, _ref22) {
-      var comment = _ref21.comment;
-      var user = _ref22.user;
-      var check, v, updated_post_comment_u, comment_upvote;
-      return regeneratorRuntime.wrap(function _callee8$(_context8) {
-        while (1) {
-          switch (_context8.prev = _context8.next) {
-            case 0:
-              _context8.prev = 0;
-              _context8.next = 3;
-              return (0, _auth.requireAuth)(user);
-
-            case 3:
-              _context8.next = 5;
-              return _CommentUpvote2.default.findOne({ user: user._id, comment: comment });
-
-            case 5:
-              check = _context8.sent;
-              v = void 0, updated_post_comment_u = void 0, comment_upvote = void 0;
-
-              if (check) {
-                _context8.next = 14;
-                break;
-              }
-
-              _context8.next = 10;
-              return _CommentUpvote2.default.create({ user: user._id, comment: comment });
-
-            case 10:
-              comment_upvote = +1;
-              v = true;
-              _context8.next = 18;
-              break;
-
-            case 14:
-              _context8.next = 16;
-              return _CommentUpvote2.default.remove({ user: user._id, comment: comment });
-
-            case 16:
-              comment_upvote = -1;
-              v = false;
-
-            case 18:
-              _context8.next = 20;
-              return _PostComment2.default.findByIdAndUpdate(comment, { $inc: { upvote_no: comment_upvote } }, { new: true });
-
-            case 20:
-              updated_post_comment_u = _context8.sent;
-
-              //Subscription for post comment upvoted
-              _pubsub.pubsub.publish(POST_COMMENT_UPVOTED, _defineProperty({}, POST_COMMENT_UPVOTED, updated_post_comment_u));
-              return _context8.abrupt('return', { message: "success", value: v });
-
-            case 25:
-              _context8.prev = 25;
-              _context8.t0 = _context8['catch'](0);
-              return _context8.abrupt('return', {
-                message: "error",
-                value: true
-              });
-
-            case 28:
-            case 'end':
-              return _context8.stop();
-          }
-        }
-      }, _callee8, undefined, [[0, 25]]);
-    }));
-
-    function upvote_post_comment(_x22, _x23, _x24) {
-      return _ref23.apply(this, arguments);
-    }
-
-    return upvote_post_comment;
-  }(),
-  downvote_post_comment: function () {
-    var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(_, _ref24, _ref25) {
-      var comment = _ref24.comment;
-      var user = _ref25.user;
-      var check, v, upvoted_post_comment_d, comment_upvote;
-      return regeneratorRuntime.wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              _context9.prev = 0;
-              _context9.next = 3;
-              return (0, _auth.requireAuth)(user);
-
-            case 3:
-              _context9.next = 5;
-              return _CommentDownvote2.default.findOne({ user: user._id, comment: comment });
-
-            case 5:
-              check = _context9.sent;
-              v = void 0, upvoted_post_comment_d = void 0, comment_upvote = void 0;
-
-              if (check) {
-                _context9.next = 14;
-                break;
-              }
-
-              _context9.next = 10;
-              return _CommentDownvote2.default.create({ user: user._id, comment: comment });
-
-            case 10:
-              comment_downvote = +1;
-              v = true;
-              _context9.next = 18;
-              break;
-
-            case 14:
-              _context9.next = 16;
-              return _CommentDownvote2.default.remove({ user: user._id, comment: comment });
-
-            case 16:
-              comment_downvote = -1;
-              v = false;
-
-            case 18:
-              _context9.next = 20;
-              return _PostComment2.default.findByIdAndUpdate(comment, { $inc: { downvote_no: comment_downvote } }, { new: true });
-
-            case 20:
-              upvoted_post_comment_d = _context9.sent;
-
-              //Subscription for post comment downvoted
-              _pubsub.pubsub.publish(POST_COMMENT_DOWNVOTED, _defineProperty({}, POST_COMMENT_DOWNVOTED, upvoted_post_comment_d));
-              return _context9.abrupt('return', { message: "success", value: v });
-
-            case 25:
-              _context9.prev = 25;
-              _context9.t0 = _context9['catch'](0);
-              return _context9.abrupt('return', {
-                message: "error",
-                value: true
-              });
-
-            case 28:
-            case 'end':
-              return _context9.stop();
-          }
-        }
-      }, _callee9, undefined, [[0, 25]]);
-    }));
-
-    function downvote_post_comment(_x25, _x26, _x27) {
-      return _ref26.apply(this, arguments);
-    }
-
-    return downvote_post_comment;
   }(),
   /*******************************************************************
    *******************************************************************
@@ -651,23 +315,7 @@ exports.default = {
     subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
       return _pubsub.pubsub.asyncIterator(NEW_POST);
     }, function (payload, variables) {
-      return Boolean(payload.new_post.department === variables.department);
-    })
-  },
-  //Returns whole post with updated upvote number
-  post_upvote_updated: {
-    subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
-      return _pubsub.pubsub.asyncIterator(POST_UPVOTE_UPDATED);
-    }, function (payload, variables) {
-      return Boolean(payload.post_upvote_updated.department === variables.department);
-    })
-  },
-  //Returns whole Post with updated downvote number
-  post_downvote_updated: {
-    subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
-      return _pubsub.pubsub.asyncIterator(POST_DOWNVOTE_UPDATED);
-    }, function (payload, variables) {
-      return Boolean(payload.post_downvote_updated.department === variables.department);
+      return Boolean(payload.new_post.sector === variables.sector);
     })
   },
   //Returns new post comment 
@@ -676,30 +324,6 @@ exports.default = {
       return _pubsub.pubsub.asyncIterator(POST_COMMENT_ADDED);
     }, function (payload, variables) {
       return Boolean(toString(payload.post_comment_added.post) === toString(variables.post));
-    })
-  },
-  //Returns posts with updated number
-  post_comment_increased: {
-    subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
-      return _pubsub.pubsub.asyncIterator(POST_COMMENT_INCREASED);
-    }, function (payload, variables) {
-      return Boolean(toString(payload.post_comment_increased.department) === toString(variables.department));
-    })
-  },
-  //Returns post comment with updated upvote
-  post_comment_upvoted: {
-    subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
-      return _pubsub.pubsub.asyncIterator(POST_COMMENT_UPVOTED);
-    }, function (payload, variables) {
-      return Boolean(payload.post_comment_upvoted.department === variables.department);
-    })
-  },
-  //Returns post comment with updated downvoted
-  post_comment_downvoted: {
-    subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
-      return _pubsub.pubsub.asyncIterator(POST_COMMENT_DOWNVOTED);
-    }, function (payload, variables) {
-      return Boolean(payload.post_comment_downvoted.department === variables.department);
     })
   }
 };
