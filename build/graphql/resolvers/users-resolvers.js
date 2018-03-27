@@ -22,6 +22,7 @@ exports.default = {
           fname = _ref.fname,
           lname = _ref.lname,
           email = _ref.email,
+          sector = _ref.sector,
           password = _ref.password;
       var user;
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -41,7 +42,7 @@ exports.default = {
               }
 
               _context.next = 7;
-              return _User2.default.create({ phone: phone, lname: lname, fname: fname, email: email, password: password });
+              return _User2.default.create({ phone: phone, lname: lname, fname: fname, email: email, sector: sector, password: password });
 
             case 7:
               user = _context.sent;
@@ -70,36 +71,83 @@ exports.default = {
 
     return create_account;
   }(),
-  //Returning current logged user
-  me: function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_, args, _ref3) {
-      var user = _ref3.user;
+  //Updating new user name or un-verify user after successfully verification of phone
+  login: function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_, _ref3) {
+      var phone = _ref3.phone;
+      var user;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
               _context2.next = 3;
-              return (0, _auth.requireAuth)(user);
+              return _User2.default.findOne({ phone: phone });
 
             case 3:
-              return _context2.abrupt('return', _context2.sent);
+              user = _context2.sent;
+
+              if (user) {
+                _context2.next = 6;
+                break;
+              }
+
+              throw new Error("Create account");
 
             case 6:
-              _context2.prev = 6;
+              return _context2.abrupt('return', {
+                token: user.createToken()
+              });
+
+            case 9:
+              _context2.prev = 9;
               _context2.t0 = _context2['catch'](0);
               throw _context2.t0;
 
-            case 9:
+            case 12:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, undefined, [[0, 6]]);
+      }, _callee2, undefined, [[0, 9]]);
     }));
 
-    function me(_x3, _x4, _x5) {
+    function login(_x3, _x4) {
       return _ref4.apply(this, arguments);
+    }
+
+    return login;
+  }(),
+  //Returning current logged user
+  me: function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(_, args, _ref5) {
+      var user = _ref5.user;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return (0, _auth.requireAuth)(user);
+
+            case 3:
+              return _context3.abrupt('return', _context3.sent);
+
+            case 6:
+              _context3.prev = 6;
+              _context3.t0 = _context3['catch'](0);
+              throw _context3.t0;
+
+            case 9:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined, [[0, 6]]);
+    }));
+
+    function me(_x5, _x6, _x7) {
+      return _ref6.apply(this, arguments);
     }
 
     return me;

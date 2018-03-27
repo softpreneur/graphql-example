@@ -31,12 +31,13 @@ export default `
     }
     type Query {
         me: User
+        login(phone: String!): Auth
         posts(cursor: Date, limit: Int!): [Post]
         my_posts(cursor: Date, limit: Int!): [Post]
         post_comments(post: ID!, cursor: Date, limit: Int!): [PostComment]
     }
     type Mutation {
-        create_account(phone: String!, fname: String, lname: String, email: String): Auth
+        create_account(phone: String!, fname: String!, lname: String!, email: String, sector: String!, password: String!): Auth
         create_post(question: String!): Post
         create_post_comment(post: ID!, comment: String!): PostComment 
     }

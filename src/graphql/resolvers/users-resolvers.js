@@ -2,13 +2,30 @@ import User from '../../models/User';
 import { requireAuth } from '../../services/auth';
 export default {
   //Updating new user name or un-verify user after successfully verification of phone
-  create_account: async (_, { phone, fname, lname, email, password }) => {
+  create_account: async (_, { phone, fname, lname, email, sector, password }) => {
     try {
       //Checking if user exist
       let user = await User.findOne({ phone: phone });
       //If user doesn't exist
       if(!user){
-          user = await User.create({ phone: phone, lname: lname, fname: fname, email: email, password: password });
+          user = await User.create({ phone: phone, lname: lname, fname: fname, email: email,sector: sector, password: password });
+      } 
+      //Creating token for user
+      return {
+          token: user.createToken()
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
+  //Updating new user name or un-verify user after successfully verification of phone
+  login: async (_, { phone }) => {
+    try {
+      //Checking if user exist
+      let user = await User.findOne({ phone: phone });
+      //If user doesn't exist
+      if(!user){
+          throw new Error("Create account")
       } 
       //Creating token for user
       return {

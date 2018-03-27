@@ -20,6 +20,7 @@ export default {
   },
   Query: {
     me: UserResolvers.me,
+    login: UserResolvers.login,
     posts: PostResolvers.posts,
     my_posts: PostResolvers.my_posts,
     post_comments: PostResolvers.post_comments

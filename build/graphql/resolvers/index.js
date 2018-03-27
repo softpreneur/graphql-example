@@ -52,6 +52,7 @@ exports.default = {
   },
   Query: {
     me: _usersResolvers2.default.me,
+    login: _usersResolvers2.default.login,
     posts: _postsResolvers2.default.posts,
     my_posts: _postsResolvers2.default.my_posts,
     post_comments: _postsResolvers2.default.post_comments
