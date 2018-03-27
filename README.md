@@ -7,9 +7,9 @@ This example allow users to create account, login, create new posts only when th
 
 You can also read my experience with graphql on medium ()
 
-If you customize this to work for you, kindly follow these step to get it working
-1. I use some ES6 and ES7 features, after editing or customizing this, run: "npm run build" to transpile from ES6 + ES7 syntax to ES5
-2. Then open the build folder find where you have require("babel-core/register");
+If you wish to customize this, kindly follow these step to get it working
+1. I used some ES6 and ES7 syntax and features, after editing or customizing this, run: "npm run build" to transpile from ES6 + ES7 syntax to ES5
+2. Then open the build folder, inside the "app.js" find the line where you have require("babel-core/register");
 require("babel-polyfill"); cut it and past it before any line of code in the same app.js to avoid getting this error:
 
  Error: Cannot find module 'compression'
@@ -25,4 +25,5 @@ require("babel-polyfill"); cut it and past it before any line of code in the sam
     at Function.Module._load (module.js:505:3)
 [nodemon] app crashed - waiting for file changes before starting...
 
-3. Finally run "npm run start" to start the server.
+Due to polyfil
+3. Finally run "npm run start" to start the server, happy coding and testing.. more examples to come
